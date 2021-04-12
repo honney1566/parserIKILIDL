@@ -101,11 +101,26 @@ def rimi():
                 pass
         else:
             pass
-
+def printresults():
+    print("Maxima kainos")
+    print(datamaxima[datamaxima['Maxima Name'].str.contains(word)])
+    print("IKI kainos")
+    print(dataIKI[dataIKI['IKI Name'].str.contains(word)])
+    print("Rimi kainos")
+    print(datarimi[datarimi['Name'].str.contains(word)])
+    print("Lidl kainos")
+    print(dataLIDL[dataLIDL['LIDL Name'].str.contains(word)])
+W  = '\033[0m'  # white (normal)
+R  = '\033[31m' # red
+G  = '\033[32m' # green
+O  = '\033[33m' # orange
+B  = '\033[34m' # blue
+P  = '\033[35m' # purple
 dataLIDL = pd.DataFrame({'ID' : ()})
 dataIKI = pd.DataFrame({'ID' : ()})
 datamaxima = pd.DataFrame({'ID' : ()})
 datarimi = pd.DataFrame({'ID' : ()})
+word=input("Name:")
 a=[]
 b=[]
 c=[]
@@ -137,8 +152,17 @@ del datamaxima['ID']
 datamaxima.drop_duplicates(inplace=True)
 dataIKI.drop_duplicates(inplace=True)
 dataLIDL.drop_duplicates(inplace=True)
-#print(data)
+#print(dataLIDL)
 dataLIDL.to_csv (r'C:\Users\Eduard\Desktop\export_dataframeLIDL.csv') #Save data
 dataIKI.to_csv (r'C:\Users\Eduard\Desktop\export_dataframeLIKI.csv')
 datamaxima.to_csv(r'C:\Users\Eduard\Desktop\export_dataframemaxima.csv')
 datarimi.to_csv(r'C:\Users\Eduard\Desktop\export_dataframerimi.csv')
+printresults()
+try:
+    while True:
+        word = input("Name:")
+        printresults()
+except KeyboardInterrupt:
+    pass
+
+
