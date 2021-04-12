@@ -2,6 +2,7 @@
 from bs4 import  BeautifulSoup
 import pandas as pd
 import requests
+from termcolor import colored
 def LIDL():
     #Prepare data
     URL = 'https://www.lidl.lt/pasiulymai'
@@ -102,25 +103,32 @@ def rimi():
         else:
             pass
 def printresults():
-    print("Maxima kainos")
-    print(datamaxima[datamaxima['Maxima Name'].str.contains(word)])
-    print("IKI kainos")
-    print(dataIKI[dataIKI['IKI Name'].str.contains(word)])
-    print("Rimi kainos")
-    print(datarimi[datarimi['Name'].str.contains(word)])
-    print("Lidl kainos")
-    print(dataLIDL[dataLIDL['LIDL Name'].str.contains(word)])
-W  = '\033[0m'  # white (normal)
-R  = '\033[31m' # red
-G  = '\033[32m' # green
-O  = '\033[33m' # orange
-B  = '\033[34m' # blue
-P  = '\033[35m' # purple
+    i=0
+    while i<listed.shape[0]:
+        print (colored('Maxima kainos   '+listed.iloc[i], 'red'))
+        print(datamaxima[datamaxima['Maxima Name'].str.contains(listed['Name'].iloc[i])])
+        print (colored('IKI kainos   '+listed.iloc[i], 'red'))
+        print(dataIKI[dataIKI['IKI Name'].str.contains(listed['Name'].iloc[i])])
+        print (colored('Rimi kainos   '+listed.iloc[i], 'red'))
+        print(datarimi[datarimi['Name'].str.contains(listed['Name'].iloc[i])])
+        print (colored('LIDL kainos   '+listed.iloc[i], 'red'))
+        print(dataLIDL[dataLIDL['LIDL Name'].str.contains(listed['Name'].iloc[i])])
+        i=i+1
 dataLIDL = pd.DataFrame({'ID' : ()})
 dataIKI = pd.DataFrame({'ID' : ()})
 datamaxima = pd.DataFrame({'ID' : ()})
 datarimi = pd.DataFrame({'ID' : ()})
-word=input("Name:")
+listed=pd.DataFrame({'ID':()})
+words=[]
+while True:
+    word = input("Name:")
+    words.append(word)
+    if word=='0':
+        break
+
+listed.insert(1,'Name', pd.Series(words))
+del listed['ID']
+listed.drop(listed.tail(1).index,inplace=True)
 a=[]
 b=[]
 c=[]
@@ -157,12 +165,6 @@ dataLIDL.to_csv (r'C:\Users\Eduard\Desktop\export_dataframeLIDL.csv') #Save data
 dataIKI.to_csv (r'C:\Users\Eduard\Desktop\export_dataframeLIKI.csv')
 datamaxima.to_csv(r'C:\Users\Eduard\Desktop\export_dataframemaxima.csv')
 datarimi.to_csv(r'C:\Users\Eduard\Desktop\export_dataframerimi.csv')
-printresults()
-try:
-    while True:
-        word = input("Name:")
-        printresults()
-except KeyboardInterrupt:
-    pass
+
 
 
